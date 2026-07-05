@@ -102,7 +102,17 @@ export default function UserManagementClient({
   });
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-container-max mx-auto">
+    <div className="flex-grow flex flex-col gap-6 w-full max-w-container-max mx-auto relative">
+      {/* Loading Overlay when API is in flight */}
+      {(isPending || isAddingPending) && (
+        <div className="fixed inset-0 bg-on-background/10 backdrop-blur-[2px] z-50 flex items-center justify-center pointer-events-auto">
+          <div className="bg-surface-container-lowest p-6 rounded-xl shadow-level-2 border border-outline-variant/30 flex items-center gap-3">
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+            <span className="font-sans text-body-base font-bold text-on-surface">Updating Database...</span>
+          </div>
+        </div>
+      )}
+
       {/* Header section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-stack-md mb-2 w-full">
         <div>
@@ -151,12 +161,12 @@ export default function UserManagementClient({
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-surface-container-low border-b border-outline-variant/30 font-sans text-label-caps text-on-surface-variant font-bold uppercase tracking-wider">
-                <th className="py-4 px-6">Name</th>
-                <th className="py-4 px-6">Email</th>
-                <th className="py-4 px-6">Role</th>
-                <th className="py-4 px-6 text-center">Quizzes Attempted</th>
-                <th className="py-4 px-6">Joined Date</th>
-                <th className="py-4 px-6 text-right">Actions</th>
+                <th className="p-4">Name</th>
+                <th className="p-4">Email</th>
+                <th className="p-4">Role</th>
+                <th className="p-4 text-center">Quizzes Attempted</th>
+                <th className="p-4">Joined Date</th>
+                <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-outline-variant/20">
@@ -178,7 +188,7 @@ export default function UserManagementClient({
 
                   return (
                     <tr key={user.id} className="hover:bg-surface-container/10 transition-colors group">
-                      <td className="py-4 px-6">
+                      <td className="p-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold font-sans text-sm shrink-0">
                             {initials}
@@ -188,23 +198,23 @@ export default function UserManagementClient({
                           </span>
                         </div>
                       </td>
-                      <td className="py-4 px-6 font-sans text-body-base text-on-surface-variant whitespace-nowrap">
+                      <td className="p-4 font-sans text-body-base text-on-surface-variant whitespace-nowrap">
                         {user.email}
                       </td>
-                      <td className="py-4 px-6">
+                      <td className="p-4">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-label-caps font-bold ${
                           user.role === 'ADMIN' ? 'bg-primary-container text-on-primary-container' : 'bg-surface-dim text-on-surface'
                         }`}>
                           {user.role}
                         </span>
                       </td>
-                      <td className="py-4 px-6 font-sans font-bold text-on-background text-center">
+                      <td className="p-4 font-sans font-bold text-on-background text-center">
                         {userAttemptsCount}
                       </td>
-                      <td className="py-4 px-6 font-sans text-body-base text-on-surface-variant whitespace-nowrap">
+                      <td className="p-4 font-sans text-body-base text-on-surface-variant whitespace-nowrap">
                         {new Date(user.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="py-4 px-6 text-right">
+                      <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-2 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                           {user.role === 'USER' && (
                             <button
