@@ -7,6 +7,11 @@ export function useCountdown(initialSeconds: number, onExpire?: () => void) {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const endTimeRef = useRef<number | null>(null);
 
+  const onExpireRef = useRef(onExpire);
+  useEffect(() => {
+    onExpireRef.current = onExpire;
+  });
+
   useEffect(() => {
     // Set absolute target time to prevent drift
     endTimeRef.current = Date.now() + initialSeconds * 1000;
@@ -20,14 +25,14 @@ export function useCountdown(initialSeconds: number, onExpire?: () => void) {
 
       if (remaining <= 0) {
         if (intervalRef.current) clearInterval(intervalRef.current);
-        onExpire?.();
+        onExpireRef.current?.();
       }
     }, 1000);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [initialSeconds, onExpire]);
+  }, [initialSeconds]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
