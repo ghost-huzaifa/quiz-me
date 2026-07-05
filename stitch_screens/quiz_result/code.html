@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quiz Completed - QuizPro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#006387",
+                    "primary-fixed-dim": "#ffb4a5",
+                    "on-background": "#161c28",
+                    "background": "#f9f9ff",
+                    "inverse-on-surface": "#ecf0ff",
+                    "on-surface-variant": "#5c403a",
+                    "tertiary-fixed": "#c4e7ff",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#3e0400",
+                    "on-secondary-fixed-variant": "#6d3a00",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-container": "#6b3900",
+                    "tertiary-container": "#007daa",
+                    "surface-container": "#e8eeff",
+                    "surface-tint": "#ba1c00",
+                    "surface-dim": "#d4daeb",
+                    "primary-fixed": "#ffdad3",
+                    "primary-container": "#dc3214",
+                    "outline": "#916f69",
+                    "surface-container-low": "#f1f3ff",
+                    "surface-variant": "#dde2f3",
+                    "primary": "#b51c00",
+                    "outline-variant": "#e5bdb6",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#dde2f3",
+                    "secondary-container": "#fc9d41",
+                    "surface": "#f9f9ff",
+                    "on-surface": "#161c28",
+                    "inverse-surface": "#2a303d",
+                    "inverse-primary": "#ffb4a5",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed": "#001e2c",
+                    "on-primary-container": "#fffbff",
+                    "secondary-fixed-dim": "#ffb77a",
+                    "surface-container-high": "#e2e8f9",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#2e1500",
+                    "on-tertiary-fixed-variant": "#004c69",
+                    "secondary": "#8f4e00",
+                    "tertiary-fixed-dim": "#7cd0ff",
+                    "on-tertiary-container": "#fcfcff",
+                    "secondary-fixed": "#ffdcc2",
+                    "surface-bright": "#f9f9ff",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#8e1300",
+                    "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "column-gap": "24px",
+                    "container-max": "1200px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "mono-timer": [
+                            "Inter"
+                    ],
+                    "label-caps": [
+                            "Inter"
+                    ],
+                    "body-base": [
+                            "Inter"
+                    ],
+                    "headline-md-mobile": [
+                            "Inter"
+                    ],
+                    "display-lg": [
+                            "Inter"
+                    ],
+                    "question-text": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "headline-md": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "mono-timer": [
+                            "20px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-base": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md-mobile": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "question-text": [
+                            "22px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "500"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-base antialiased min-h-screen flex flex-col items-center justify-center p-margin-mobile md:p-margin-desktop">
+<main class="w-full max-w-lg bg-surface-container-low rounded-xl shadow-[0px_8px_30px_rgba(0,0,0,0.12)] p-stack-lg flex flex-col items-center text-center transform transition-all duration-300 hover:scale-[1.01]">
+<!-- Icon -->
+<div class="mb-stack-md text-primary bg-primary-fixed w-24 h-24 rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-display-lg" style="font-size: 64px; line-height: 1;">crisis_alert</span>
+</div>
+<!-- Heading -->
+<h1 class="font-headline-md text-headline-md-mobile md:text-headline-md text-on-surface mb-stack-sm">
+            Quiz Completed!
+        </h1>
+<!-- Score -->
+<div class="font-display-lg text-display-lg text-[#10B981] mb-stack-sm">
+            90%
+        </div>
+<!-- Feedback -->
+<p class="font-body-base text-body-base text-on-surface-variant mb-stack-lg">
+            Excellent work! You passed the quiz.
+        </p>
+<!-- Actions -->
+<div class="w-full flex flex-col gap-stack-md">
+<button class="w-full flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#059669] text-white font-headline-md text-body-base py-3 px-6 rounded-lg shadow-sm transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[20px]">search</span>
+                Review Quiz
+            </button>
+<button class="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#EA580C] text-white font-headline-md text-body-base py-3 px-6 rounded-lg shadow-sm transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[20px]">emoji_events</span>
+                View Leaderboard
+            </button>
+<button class="w-full flex items-center justify-center gap-2 bg-[#EAB308] hover:bg-[#CA8A04] text-white font-headline-md text-body-base py-3 px-6 rounded-lg shadow-sm transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[20px]">home</span>
+                Back to Dashboard
+            </button>
+</div>
+</main>
+</body></html>

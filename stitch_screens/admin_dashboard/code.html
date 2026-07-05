@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QuizPro Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#006387",
+                        "primary-fixed-dim": "#ffb4a5",
+                        "on-background": "#161c28",
+                        "background": "#f9f9ff",
+                        "inverse-on-surface": "#ecf0ff",
+                        "on-surface-variant": "#5c403a",
+                        "tertiary-fixed": "#c4e7ff",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#3e0400",
+                        "on-secondary-fixed-variant": "#6d3a00",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#6b3900",
+                        "tertiary-container": "#007daa",
+                        "surface-container": "#e8eeff",
+                        "surface-tint": "#ba1c00",
+                        "surface-dim": "#d4daeb",
+                        "primary-fixed": "#ffdad3",
+                        "primary-container": "#dc3214",
+                        "outline": "#916f69",
+                        "surface-container-low": "#f1f3ff",
+                        "surface-variant": "#dde2f3",
+                        "primary": "#b51c00",
+                        "outline-variant": "#e5bdb6",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#dde2f3",
+                        "secondary-container": "#fc9d41",
+                        "surface": "#f9f9ff",
+                        "on-surface": "#161c28",
+                        "inverse-surface": "#2a303d",
+                        "inverse-primary": "#ffb4a5",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#001e2c",
+                        "on-primary-container": "#fffbff",
+                        "secondary-fixed-dim": "#ffb77a",
+                        "surface-container-high": "#e2e8f9",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#2e1500",
+                        "on-tertiary-fixed-variant": "#004c69",
+                        "secondary": "#8f4e00",
+                        "tertiary-fixed-dim": "#7cd0ff",
+                        "on-tertiary-container": "#fcfcff",
+                        "secondary-fixed": "#ffdcc2",
+                        "surface-bright": "#f9f9ff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#8e1300",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "column-gap": "24px",
+                        "container-max": "1200px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "mono-timer": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-base": ["Inter"],
+                        "headline-md-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "question-text": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "mono-timer": ["20px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "question-text": ["22px", { "lineHeight": "32px", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .shadow-level-1 { box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05); }
+        .shadow-level-2:hover { box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.12); }
+    </style>
+</head>
+<body class="bg-background text-on-background flex min-h-screen font-body-base text-body-base">
+<!-- SideNavBar Component -->
+<nav class="bg-surface dark:bg-inverse-surface h-screen w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline shadow-sm flex flex-col gap-stack-md p-4 z-40">
+<!-- Header / Brand -->
+<div class="flex items-center gap-3 mb-6 px-2">
+<img alt="Admin User" class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="A small, professional headshot of an administrator in a modern office setting. The lighting is crisp and bright, conveying a sense of authority and clarity consistent with a high-fidelity SaaS dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQx19Pxmskr6hqN2es0999HOXFkW1j9sL-ZEVZdiKryKf2SNtj9C3LlK_qeg-uz_gH6BxvTjdxOR1GE3t8ezMwWPZdfh16Z9O7fsAI3AqjKvjFkTeZ3p1CfFX0iZfworeMqcqGEfQFiKlzwDuj8qe-HxKDX3uHke3KGzPKPFOAhyJME5PlBMPBjtLvjhk9n_Xcjn7eHa2yz5ZFJz8TB7coGfQdPSaTP_XcDXz1kZ6f4TlSt8LwBuWB"/>
+<div>
+<h2 class="font-headline-md-mobile text-headline-md-mobile md:text-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">Admin Portal</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Management Console</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-2 flex-grow">
+<!-- Active Tab: Dashboard -->
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-body-base text-body-base">Dashboard</span>
+</a>
+<!-- Inactive Tab: Quizzes -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:text-surface-variant transition-all hover:translate-x-1 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">quiz</span>
+<span class="font-body-base text-body-base">Quizzes</span>
+</a>
+<!-- Inactive Tab: Users -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:text-surface-variant transition-all hover:translate-x-1 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-base text-body-base">Users</span>
+</a>
+<!-- Inactive Tab: Categories -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high dark:text-surface-variant transition-all hover:translate-x-1 duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">category</span>
+<span class="font-body-base text-body-base">Categories</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen relative">
+<!-- Header -->
+<header class="bg-surface-container-lowest border-b border-outline-variant py-4 px-margin-desktop sticky top-0 z-30 shadow-level-1 flex items-center justify-between">
+<h1 class="font-headline-md text-headline-md text-on-background">Admin Console</h1>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-margin-mobile md:p-margin-desktop flex-grow flex flex-col gap-stack-lg max-w-container-max mx-auto w-full">
+<!-- Stats Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-column-gap">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-level-1 shadow-level-2 transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">library_books</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Quizzes</p>
+<p class="font-headline-md-mobile text-headline-md-mobile font-bold text-on-background">24</p>
+</div>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-level-1 shadow-level-2 transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Users</p>
+<p class="font-headline-md-mobile text-headline-md-mobile font-bold text-on-background">1.2k</p>
+</div>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-level-1 shadow-level-2 transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Attempts</p>
+<p class="font-headline-md-mobile text-headline-md-mobile font-bold text-on-background">8.5k</p>
+</div>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-level-1 shadow-level-2 transition-shadow duration-300 border border-transparent hover:border-primary/20">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Avg Score</p>
+<p class="font-headline-md-mobile text-headline-md-mobile font-bold text-on-background">76%</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Chart and Activity Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-column-gap">
+<!-- Chart Area -->
+<section class="lg:col-span-2 bg-surface-container-lowest rounded-xl shadow-level-1 p-6 border border-outline-variant/30 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-background tracking-tight">Attempts Over Time</h3>
+<span class="font-label-caps text-label-caps px-3 py-1 bg-surface-container text-on-surface-variant rounded-full">Last 7 Days</span>
+</div>
+<!-- CSS Bar Chart Mockup -->
+<div class="flex-grow flex items-end justify-between gap-2 h-64 pt-4 border-b border-l border-outline-variant/50 pb-2 pl-4">
+<div class="w-full bg-primary/20 rounded-t-sm relative group transition-all duration-300 hover:bg-primary/40 cursor-pointer" style="height: 40%">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-background text-surface-container-lowest text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">400</div>
+</div>
+<div class="w-full bg-primary/30 rounded-t-sm relative group transition-all duration-300 hover:bg-primary/50 cursor-pointer" style="height: 60%">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-background text-surface-container-lowest text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">600</div>
+</div>
+<div class="w-full bg-primary/40 rounded-t-sm relative group transition-all duration-300 hover:bg-primary/60 cursor-pointer" style="height: 50%">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-background text-surface-container-lowest text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">500</div>
+</div>
+<div class="w-full bg-primary rounded-t-sm shadow-[0_0_15px_rgba(181,28,0,0.3)] relative group transition-all duration-300 hover:brightness-110 cursor-pointer" style="height: 90%">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-background text-surface-container-lowest text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">900</div>
+</div>
+<div class="w-full bg-primary/60 rounded-t-sm relative group transition-all duration-300 hover:bg-primary/80 cursor-pointer" style="height: 75%">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-background text-surface-container-lowest text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">750</div>
+</div>
+<div class="w-full bg-primary/50 rounded-t-sm relative group transition-all duration-300 hover:bg-primary/70 cursor-pointer" style="height: 65%">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-background text-surface-container-lowest text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">650</div>
+</div>
+<div class="w-full bg-primary/70 rounded-t-sm relative group transition-all duration-300 hover:bg-primary/90 cursor-pointer" style="height: 85%">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-on-background text-surface-container-lowest text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">850</div>
+</div>
+</div>
+<div class="flex justify-between text-xs text-on-surface-variant mt-2 px-2">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</section>
+<!-- Recent Activity Feed -->
+<section class="lg:col-span-1 bg-surface-container-lowest rounded-xl shadow-level-1 p-6 border border-outline-variant/30 flex flex-col h-full">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-background tracking-tight">Recent Activity</h3>
+</div>
+<div class="flex flex-col gap-4 overflow-y-auto pr-2">
+<!-- Feed Item -->
+<div class="flex items-center gap-3 pb-4 border-b border-outline-variant/30 last:border-0 last:pb-0">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-bold shrink-0">SJ</div>
+<div class="flex-grow min-w-0">
+<p class="font-body-base text-body-base font-medium text-on-background truncate">Sarah Jenkins</p>
+<p class="text-sm text-on-surface-variant truncate">Completed 'Advanced React Patterns'</p>
+</div>
+<div class="text-right shrink-0">
+<span class="font-label-caps text-label-caps px-2 py-1 bg-surface-container-high text-on-background rounded">92%</span>
+</div>
+</div>
+<!-- Feed Item -->
+<div class="flex items-center gap-3 pb-4 border-b border-outline-variant/30 last:border-0 last:pb-0">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold shrink-0">MR</div>
+<div class="flex-grow min-w-0">
+<p class="font-body-base text-body-base font-medium text-on-background truncate">Mike Ross</p>
+<p class="text-sm text-on-surface-variant truncate">Attempted 'Corporate Law Basics'</p>
+</div>
+<div class="text-right shrink-0">
+<span class="font-label-caps text-label-caps px-2 py-1 bg-error-container text-on-error-container rounded">64%</span>
+</div>
+</div>
+<!-- Feed Item -->
+<div class="flex items-center gap-3 pb-4 border-b border-outline-variant/30 last:border-0 last:pb-0">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-bold shrink-0">AL</div>
+<div class="flex-grow min-w-0">
+<p class="font-body-base text-body-base font-medium text-on-background truncate">Anna Lee</p>
+<p class="text-sm text-on-surface-variant truncate">Completed 'Design Systems 101'</p>
+</div>
+<div class="text-right shrink-0">
+<span class="font-label-caps text-label-caps px-2 py-1 bg-surface-container-high text-on-background rounded">88%</span>
+</div>
+</div>
+<!-- Feed Item -->
+<div class="flex items-center gap-3 pb-4 border-b border-outline-variant/30 last:border-0 last:pb-0">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold shrink-0">JD</div>
+<div class="flex-grow min-w-0">
+<p class="font-body-base text-body-base font-medium text-on-background truncate">John Doe</p>
+<p class="text-sm text-on-surface-variant truncate">Started 'Cybersecurity Fundamentals'</p>
+</div>
+<div class="text-right shrink-0">
+<span class="font-label-caps text-label-caps px-2 py-1 bg-surface-variant text-on-surface-variant rounded">In Prog</span>
+</div>
+</div>
+</div>
+<button class="mt-4 w-full py-2 text-primary font-medium hover:bg-primary/5 rounded transition-colors">View All Activity</button>
+</section>
+</div>
+</div>
+</main>
+</body></html>

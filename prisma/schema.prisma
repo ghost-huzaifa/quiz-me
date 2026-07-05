@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id                  String                @id @default(cuid())
+  email               String                @unique
+  password            String                // bcrypt hashed
+  name                String
+  role                Role                  @default(USER)
+  attempts            QuizAttempt[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Quiz {
+  id              String   @id @default(cuid())
+  title           String
+  description     String?
+  timeLimitMins   Int       // time limit in minutes
+  passingPercent  Int       @default(60)
+  isPublished     Boolean   @default(false)
+  randomize       Boolean   @default(true)
+  questions       Question[]
+  attempts        QuizAttempt[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Question {
+  id            String @id @default(cuid())
+  text          String
+  optionA       String
+  optionB       String
+  optionC       String
+  optionD       String
+  correctAnswer String // "A", "B", "C", or "D"
+  order         Int
+  quizId        String
+  quiz          Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+}
+
+model QuizAttempt {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quizId          String
+  quiz            Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  score           Float    // percentage score
+  totalCorrect    Int
+  totalQuestions  Int
+  answers         Json     // { questionId: "selectedAnswer" }
+  timeTakenSecs   Int      // time taken in seconds
+  isReattempt     Boolean  @default(false)
+  startedAt       DateTime @default(now())
+  completedAt     DateTime @default(now())
+
+  @@unique([userId, quizId, isReattempt]) // Only one attempt per user per quiz (unless reattempt enabled)
+}
+
+// Track which users can reattempt which quizzes
+model ReattemptPermission {
+  id        String   @id @default(cuid())
+  userId    String
+  quizId    String
+  grantedAt DateTime @default(now())
+
+  @@unique([userId, quizId])
+}

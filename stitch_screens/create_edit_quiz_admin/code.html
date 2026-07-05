@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QuizPro - Admin - Create Quiz</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#ffb4a5",
+                        "tertiary-fixed": "#c4e7ff",
+                        "surface-container-highest": "#dde2f3",
+                        "secondary": "#8f4e00",
+                        "primary-fixed-dim": "#ffb4a5",
+                        "on-background": "#161c28",
+                        "on-secondary-fixed-variant": "#6d3a00",
+                        "inverse-on-surface": "#ecf0ff",
+                        "surface-variant": "#dde2f3",
+                        "outline": "#916f69",
+                        "on-tertiary-container": "#fcfcff",
+                        "secondary-fixed-dim": "#ffb77a",
+                        "on-surface": "#161c28",
+                        "on-primary-fixed": "#3e0400",
+                        "surface-container-high": "#e2e8f9",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdad3",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#e8eeff",
+                        "secondary-fixed": "#ffdcc2",
+                        "on-surface-variant": "#5c403a",
+                        "on-secondary-fixed": "#2e1500",
+                        "primary-container": "#dc3214",
+                        "tertiary-fixed-dim": "#7cd0ff",
+                        "on-primary-container": "#fffbff",
+                        "tertiary-container": "#007daa",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#fc9d41",
+                        "outline-variant": "#e5bdb6",
+                        "on-tertiary-fixed": "#001e2c",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#ba1c00",
+                        "tertiary": "#006387",
+                        "inverse-surface": "#2a303d",
+                        "on-primary-fixed-variant": "#8e1300",
+                        "error-container": "#ffdad6",
+                        "background": "#f9f9ff",
+                        "on-tertiary-fixed-variant": "#004c69",
+                        "error": "#ba1a1a",
+                        "surface": "#f9f9ff",
+                        "primary": "#b51c00",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#d4daeb",
+                        "surface-bright": "#f9f9ff",
+                        "on-secondary-container": "#6b3900",
+                        "surface-container-low": "#f1f3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "column-gap": "24px",
+                        "stack-lg": "32px",
+                        "container-max": "1200px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "question-text": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "mono-timer": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-base": ["Inter"],
+                        "headline-md-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "question-text": ["22px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "mono-timer": ["20px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f9f9ff; }
+        .shadow-ambient-1 { box-shadow: 0px 4px 20px rgba(0,0,0,0.05); }
+        .shadow-ambient-2 { box-shadow: 0px 8px 30px rgba(0,0,0,0.12); }
+    </style>
+</head>
+<body class="bg-background text-on-background flex min-h-screen antialiased">
+<!-- SideNavBar Component -->
+<aside class="hidden md:flex flex-col gap-stack-md p-4 bg-surface h-screen w-64 fixed left-0 top-0 border-r border-outline-variant shadow-sm z-40">
+<div class="flex items-center gap-4 mb-6 px-2 pt-2">
+<div class="h-10 w-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+</div>
+<div>
+<h2 class="font-headline-md text-body-base text-primary font-bold">Admin Portal</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Management Console</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1 duration-200 transition-all font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container font-bold hover:translate-x-1 duration-200 transition-all font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">quiz</span>
+<span>Quizzes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1 duration-200 transition-all font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1 duration-200 transition-all font-body-base text-body-base" href="#">
+<span class="material-symbols-outlined">category</span>
+<span>Categories</span>
+</a>
+</nav>
+<div class="mt-auto">
+<button class="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1 duration-200 transition-all font-body-base text-body-base">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop bg-background min-h-screen flex flex-col">
+<!-- Header area for the specific view -->
+<header class="mb-stack-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h1 class="font-headline-md text-headline-md-mobile md:text-headline-md text-on-surface">Create New Quiz</h1>
+<p class="font-body-base text-body-base text-on-surface-variant mt-1">Configure quiz parameters and build questions.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2 rounded-full border border-outline text-on-surface font-body-base text-body-base hover:bg-surface-container-high transition-colors">
+                    Save Draft
+                </button>
+<button class="px-6 py-2 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-body-base text-body-base font-bold shadow-ambient-1 hover:shadow-ambient-2 transition-all">
+                    Publish Quiz
+                </button>
+</div>
+</header>
+<!-- Stepper -->
+<div class="flex items-center mb-stack-lg max-w-3xl mx-auto w-full">
+<div class="flex-1 border-b-2 border-primary-container relative">
+<div class="absolute left-1/2 -translate-x-1/2 -top-4 w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">1</div>
+<div class="absolute left-1/2 -translate-x-1/2 top-6 text-sm font-bold text-primary">Setup</div>
+</div>
+<div class="flex-1 border-b-2 border-outline-variant relative">
+<div class="absolute left-1/2 -translate-x-1/2 -top-4 w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-bold">2</div>
+<div class="absolute left-1/2 -translate-x-1/2 top-6 text-sm font-bold text-on-surface-variant">Builder</div>
+</div>
+</div>
+<!-- Content Canvas (Step 1 visible initially) -->
+<div class="flex-1 max-w-container-max mx-auto w-full flex flex-col lg:flex-row gap-column-gap mt-8">
+<!-- Step 1: Quiz Details Form (Bento Style) -->
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Title & Description -->
+<div class="col-span-1 md:col-span-2 bg-surface-container-lowest p-6 rounded-xl shadow-ambient-1 border border-surface-container-high">
+<h3 class="font-body-base text-body-base font-bold mb-4 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">title</span> Basic Info
+                    </h3>
+<div class="space-y-4">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Quiz Title</label>
+<input class="w-full p-4 rounded-lg bg-surface border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-body-base text-body-base text-on-surface placeholder:text-on-surface-variant/50" placeholder="e.g., Advanced JavaScript Concepts" type="text"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Description</label>
+<textarea class="w-full p-4 rounded-lg bg-surface border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-body-base text-body-base text-on-surface placeholder:text-on-surface-variant/50" placeholder="Briefly describe what this quiz covers..." rows="3"></textarea>
+</div>
+</div>
+</div>
+<!-- Parameters -->
+<div class="col-span-1 bg-surface-container-lowest p-6 rounded-xl shadow-ambient-1 border border-surface-container-high">
+<h3 class="font-body-base text-body-base font-bold mb-4 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">settings</span> Parameters
+                    </h3>
+<div class="space-y-4">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Category</label>
+<select class="w-full p-4 rounded-lg bg-surface border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all font-body-base text-body-base text-on-surface">
+<option>Programming</option>
+<option>Design</option>
+<option>Business</option>
+</select>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Difficulty</label>
+<div class="flex gap-2">
+<button class="flex-1 py-2 rounded-lg border border-outline-variant hover:bg-surface-container-high text-on-surface font-body-base text-sm">Beginner</button>
+<button class="flex-1 py-2 rounded-lg bg-secondary-container text-on-secondary-container font-bold font-body-base text-sm shadow-sm border border-secondary-container">Intermediate</button>
+<button class="flex-1 py-2 rounded-lg border border-outline-variant hover:bg-surface-container-high text-on-surface font-body-base text-sm">Expert</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Scoring & Time -->
+<div class="col-span-1 bg-surface-container-lowest p-6 rounded-xl shadow-ambient-1 border border-surface-container-high flex flex-col justify-between">
+<h3 class="font-body-base text-body-base font-bold mb-4 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">timer</span> Scoring &amp; Time
+                    </h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Time Limit (Minutes)</label>
+<input class="w-20 p-2 text-center rounded-lg bg-surface border border-outline-variant focus:border-primary font-mono-timer text-mono-timer" type="number" value="15"/>
+</div>
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Passing Score (%)</label>
+<input class="w-20 p-2 text-center rounded-lg bg-surface border border-outline-variant focus:border-primary font-mono-timer text-mono-timer" type="number" value="70"/>
+</div>
+<div class="pt-4 border-t border-surface-variant flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-on-surface font-bold">Randomize Questions</label>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+</div>
+<div class="col-span-1 md:col-span-2 flex justify-end mt-4">
+<button class="px-8 py-3 rounded-full bg-on-background text-background font-body-base text-body-base font-bold shadow-ambient-1 hover:shadow-ambient-2 transition-all flex items-center gap-2">
+                        Next: Question Builder <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QuizPro - Leaderboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#ffb4a5",
+                        "tertiary-fixed": "#c4e7ff",
+                        "surface-container-highest": "#dde2f3",
+                        "secondary": "#8f4e00",
+                        "primary-fixed-dim": "#ffb4a5",
+                        "on-background": "#161c28",
+                        "on-secondary-fixed-variant": "#6d3a00",
+                        "inverse-on-surface": "#ecf0ff",
+                        "surface-variant": "#dde2f3",
+                        "outline": "#916f69",
+                        "on-tertiary-container": "#fcfcff",
+                        "secondary-fixed-dim": "#ffb77a",
+                        "on-surface": "#161c28",
+                        "on-primary-fixed": "#3e0400",
+                        "surface-container-high": "#e2e8f9",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdad3",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#e8eeff",
+                        "secondary-fixed": "#ffdcc2",
+                        "on-surface-variant": "#5c403a",
+                        "on-secondary-fixed": "#2e1500",
+                        "primary-container": "#dc3214",
+                        "tertiary-fixed-dim": "#7cd0ff",
+                        "on-primary-container": "#fffbff",
+                        "tertiary-container": "#007daa",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#fc9d41",
+                        "outline-variant": "#e5bdb6",
+                        "on-tertiary-fixed": "#001e2c",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#ba1c00",
+                        "tertiary": "#006387",
+                        "inverse-surface": "#2a303d",
+                        "on-primary-fixed-variant": "#8e1300",
+                        "error-container": "#ffdad6",
+                        "background": "#f9f9ff",
+                        "on-tertiary-fixed-variant": "#004c69",
+                        "error": "#ba1a1a",
+                        "surface": "#f9f9ff",
+                        "primary": "#b51c00",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#d4daeb",
+                        "surface-bright": "#f9f9ff",
+                        "on-secondary-container": "#6b3900",
+                        "surface-container-low": "#f1f3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "column-gap": "24px",
+                        "stack-lg": "32px",
+                        "container-max": "1200px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "question-text": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "mono-timer": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-base": ["Inter"],
+                        "headline-md-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "question-text": ["22px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "mono-timer": ["20px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .table-row-hover:hover {
+            box-shadow: 0px 8px 30px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+            z-index: 10;
+        }
+        .user-row {
+            background-color: rgba(220, 50, 20, 0.05);
+            border: 2px solid #dc3214;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-base">
+<!-- TopNavBar -->
+<header class="bg-primary text-on-primary flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 shadow-md docked full-width top-0 z-50">
+<div class="flex items-center gap-stack-lg">
+<span class="font-headline-md-mobile md:font-headline-md text-headline-md-mobile md:text-headline-md font-black text-on-primary">QuizPro</span>
+<nav class="hidden md:flex gap-stack-lg">
+<a class="text-on-primary/80 hover:text-on-primary font-headline-md text-headline-md-mobile md:text-headline-md" href="#">Dashboard</a>
+<a class="text-on-primary border-b-2 border-on-primary pb-1 font-bold font-headline-md text-headline-md-mobile md:text-headline-md" href="#">Leaderboards</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack-md">
+<img alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-on-primary object-cover" data-alt="A small, circular avatar image of a generic user profile picture in a sleek corporate modern style. The avatar is simple, well-lit, and conveys a professional tech aesthetic, fitting within a light mode UI with vibrant red accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKml8kdjWb4dn6HhLzXlfSZmAKoH29TjmSbXfZhVtcM5b98leclev1x-xdlvQ6hQbNbZNhmEqrDwJKqRdGlzvY1MrC_4ryLtEvgNVenXDSH5VrWlNlJpS4YdUpBM2l-kQ2ROl2QZqdDRGZZMgcSP0dPC-ApTzAUrFTJEUXxZkkaTXh_ZJqH_on2baDkC2iCB6ADbwjr8GG4dh9txNa3dsizZZMAF9gK4i106nQGxlaIYorZMUbeAQj"/>
+<button class="hidden md:block px-4 py-2 text-on-primary/80 hover:text-on-primary font-headline-md text-headline-md-mobile md:text-headline-md active:scale-95 transition-transform duration-200 hover:bg-on-primary/10 transition-colors rounded">Logout</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+<!-- Header Section -->
+<div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-stack-lg">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-background mb-stack-sm">Web Development Basics</h1>
+<p class="font-question-text text-question-text text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+                    Global Leaderboard
+                </p>
+</div>
+<div class="flex gap-stack-lg bg-surface-container-lowest p-6 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-surface-variant">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase tracking-widest">Total Participants</p>
+<p class="font-headline-md text-headline-md text-primary">1,248</p>
+</div>
+<div class="w-px bg-surface-variant"></div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase tracking-widest">Average Score</p>
+<p class="font-headline-md text-headline-md text-secondary-container">76%</p>
+</div>
+</div>
+</div>
+<!-- Leaderboard Table/List -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] overflow-hidden">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-4 p-6 bg-surface-container-low border-b border-surface-variant font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest items-center hidden md:grid">
+<div class="col-span-1 text-center">Rank</div>
+<div class="col-span-5">Player</div>
+<div class="col-span-2 text-right">Score</div>
+<div class="col-span-2 text-right">Time Taken</div>
+<div class="col-span-2 text-right">Date</div>
+</div>
+<!-- List Items -->
+<div class="flex flex-col p-4 md:p-6 gap-stack-sm">
+<!-- Rank 1 -->
+<div class="grid grid-cols-12 gap-4 p-4 rounded-lg items-center bg-surface-container-lowest border border-transparent transition-all duration-200 table-row-hover relative">
+<div class="col-span-2 md:col-span-1 flex justify-center items-center">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary font-headline-md text-headline-md-mobile">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">trophy</span>
+</div>
+</div>
+<div class="col-span-10 md:col-span-5 flex items-center gap-stack-md">
+<img class="w-12 h-12 rounded-full object-cover shadow-sm border border-surface-variant" data-alt="A confident professional headshot of a software developer in a well-lit modern office environment. Bright, high-contrast lighting with a clean aesthetic matching a premium web application interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXM0EnTjyCm9sxvpne6xsHxwZyhcnsJm1e3lv85EbC-KPhzI7ArwuyjtwC9-k6IRbGJh_0X1MSB0SSuITNtV6zo657Gwl7jnZBTuqXgRijUJbT5UYlT9HZ6I8zZBYXSowxCD7UFsC1YEQbWGCVs8R-KjjXY0l06kkjGXEeGr6E2Xzed-9Paodfii2-hA93ccXawKvfQBXvCXG_CxHEjQoMfogh3Y4jh1U2_CZ8Q01W0XJjt9O8FhGR"/>
+<div>
+<p class="font-question-text text-question-text text-on-surface font-bold">Alex Chen</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant md:hidden">Score: 100% | Time: 4:12</p>
+</div>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-headline-md text-headline-md-mobile text-primary font-bold">100%</span>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-mono-timer text-mono-timer text-on-surface-variant">04:12</span>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-body-base text-body-base text-on-surface-variant">Today</span>
+</div>
+</div>
+<!-- Rank 2 -->
+<div class="grid grid-cols-12 gap-4 p-4 rounded-lg items-center bg-surface-container-lowest border border-transparent transition-all duration-200 table-row-hover relative">
+<div class="col-span-2 md:col-span-1 flex justify-center items-center">
+<div class="w-10 h-10 rounded-full bg-surface-dim flex items-center justify-center text-on-surface-variant font-headline-md text-headline-md-mobile">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">trophy</span>
+</div>
+</div>
+<div class="col-span-10 md:col-span-5 flex items-center gap-stack-md">
+<img class="w-12 h-12 rounded-full object-cover shadow-sm border border-surface-variant" data-alt="A friendly headshot of a female web designer with glasses in a bright studio setting. The lighting is soft but vibrant, complementing a light-mode corporate tech interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdItApZ5Udd4-RsGI5eXRBkeX57-Q59iBYp5rQXDvJd64j7YutCchP4GuT1GklpERnd3RhdIGkAneBVEeWOgepKkHlFc6e4GV9PoNnUSXrj8_4y1E9ToZwNJ0b4ftGq2cIwI5oe_OVVB6DXnlJGSIHKTgzqh134tTBn7OKAutK9yTHzCpPHrNBT4Lbw6yOctVCWLfRetHnlwJdQ659MyYTFgZISL7VfpdlGpdawFePSxQwiXSX7MDu"/>
+<div>
+<p class="font-question-text text-question-text text-on-surface font-bold">Sarah Jenkins</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant md:hidden">Score: 98% | Time: 4:45</p>
+</div>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-headline-md text-headline-md-mobile text-primary font-bold">98%</span>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-mono-timer text-mono-timer text-on-surface-variant">04:45</span>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-body-base text-body-base text-on-surface-variant">Today</span>
+</div>
+</div>
+<!-- Rank 3 -->
+<div class="grid grid-cols-12 gap-4 p-4 rounded-lg items-center bg-surface-container-lowest border border-transparent transition-all duration-200 table-row-hover relative">
+<div class="col-span-2 md:col-span-1 flex justify-center items-center">
+<div class="w-10 h-10 rounded-full bg-outline-variant flex items-center justify-center text-on-surface-variant font-headline-md text-headline-md-mobile">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">trophy</span>
+</div>
+</div>
+<div class="col-span-10 md:col-span-5 flex items-center gap-stack-md">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-headline-md text-headline-md-mobile">
+                            MR
+                        </div>
+<div>
+<p class="font-question-text text-question-text text-on-surface font-bold">Marcus Ross</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant md:hidden">Score: 95% | Time: 5:10</p>
+</div>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-headline-md text-headline-md-mobile text-primary font-bold">95%</span>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-mono-timer text-mono-timer text-on-surface-variant">05:10</span>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-body-base text-body-base text-on-surface-variant">Yesterday</span>
+</div>
+</div>
+<div class="h-px bg-surface-variant my-2 w-full"></div>
+<!-- Current User Row -->
+<div class="grid grid-cols-12 gap-4 p-4 rounded-lg items-center user-row transition-all duration-200 table-row-hover relative shadow-[0px_8px_30px_rgba(0,0,0,0.12)] z-10">
+<div class="col-span-2 md:col-span-1 flex justify-center items-center">
+<span class="font-headline-md text-headline-md-mobile text-on-surface-variant font-bold">42</span>
+</div>
+<div class="col-span-10 md:col-span-5 flex items-center gap-stack-md">
+<img class="w-12 h-12 rounded-full border-2 border-primary object-cover shadow-sm" data-alt="A small, circular avatar image of a generic user profile picture in a sleek corporate modern style. The avatar is simple, well-lit, and conveys a professional tech aesthetic, fitting within a light mode UI with vibrant red accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8QyJNO8t0SCBxYgPs2yo5J8Ml9BxnlfUlYy84OfhcyW0jOdgHJpBuVVhvVsiPnqQragpCrwceJncJhkxakFTzg8BhYaKNOmu8AjPEARTjA6WN8kUcltS8HgQi_3sFjRztXfJQ7uA-zY5u6xtSOMGWjJxEF-DS_oTnrby9Nzko05Wb-1vsSgfwC0z-1PS1gSs2GuidCnjjOTMjKgiqINgNXH1QLj3capiQZT2ru4eR7WqOd6Atdvbx"/>
+<div>
+<p class="font-question-text text-question-text text-on-surface font-bold flex items-center gap-2">
+                                You
+                                <span class="bg-primary text-on-primary text-[10px] px-2 py-0.5 rounded-full uppercase font-bold tracking-wider">Current</span>
+</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant md:hidden">Score: 82% | Time: 6:45</p>
+</div>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-headline-md text-headline-md-mobile text-primary font-bold">82%</span>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-mono-timer text-mono-timer text-on-surface-variant">06:45</span>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-body-base text-body-base text-on-surface-variant">Oct 24</span>
+</div>
+</div>
+<div class="h-px bg-surface-variant my-2 w-full"></div>
+<!-- Rank 43 -->
+<div class="grid grid-cols-12 gap-4 p-4 rounded-lg items-center bg-surface-container-lowest border border-transparent transition-all duration-200 table-row-hover relative opacity-70">
+<div class="col-span-2 md:col-span-1 flex justify-center items-center">
+<span class="font-headline-md text-headline-md-mobile text-on-surface-variant font-bold">43</span>
+</div>
+<div class="col-span-10 md:col-span-5 flex items-center gap-stack-md">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-headline-md text-headline-md-mobile">
+                            JD
+                        </div>
+<div>
+<p class="font-question-text text-question-text text-on-surface font-bold">John Doe</p>
+</div>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-headline-md text-headline-md-mobile text-on-surface-variant font-bold">81%</span>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-mono-timer text-mono-timer text-on-surface-variant">07:12</span>
+</div>
+<div class="col-span-3 md:col-span-2 text-right hidden md:block">
+<span class="font-body-base text-body-base text-on-surface-variant">Oct 22</span>
+</div>
+</div>
+</div>
+<!-- Pagination / Load More -->
+<div class="p-6 bg-surface-container-low border-t border-surface-variant flex justify-center">
+<button class="bg-surface-container-highest text-on-surface hover:bg-surface-dim px-6 py-3 rounded-lg font-label-caps text-label-caps transition-colors shadow-sm">
+                    Load More Rankings
+                </button>
+</div>
+</div>
+</main>
+</body></html>

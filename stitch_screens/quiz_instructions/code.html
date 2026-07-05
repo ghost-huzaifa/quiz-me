@@ -1,0 +1,277 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Quiz Instructions - QuizPro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#006387",
+                      "primary-fixed-dim": "#ffb4a5",
+                      "on-background": "#161c28",
+                      "background": "#f9f9ff",
+                      "inverse-on-surface": "#ecf0ff",
+                      "on-surface-variant": "#5c403a",
+                      "tertiary-fixed": "#c4e7ff",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed": "#3e0400",
+                      "on-secondary-fixed-variant": "#6d3a00",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-container": "#6b3900",
+                      "tertiary-container": "#007daa",
+                      "surface-container": "#e8eeff",
+                      "surface-tint": "#ba1c00",
+                      "surface-dim": "#d4daeb",
+                      "primary-fixed": "#ffdad3",
+                      "primary-container": "#dc3214",
+                      "outline": "#916f69",
+                      "surface-container-low": "#f1f3ff",
+                      "surface-variant": "#dde2f3",
+                      "primary": "#b51c00",
+                      "outline-variant": "#e5bdb6",
+                      "on-primary": "#ffffff",
+                      "surface-container-highest": "#dde2f3",
+                      "secondary-container": "#fc9d41",
+                      "surface": "#f9f9ff",
+                      "on-surface": "#161c28",
+                      "inverse-surface": "#2a303d",
+                      "inverse-primary": "#ffb4a5",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed": "#001e2c",
+                      "on-primary-container": "#fffbff",
+                      "secondary-fixed-dim": "#ffb77a",
+                      "surface-container-high": "#e2e8f9",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed": "#2e1500",
+                      "on-tertiary-fixed-variant": "#004c69",
+                      "secondary": "#8f4e00",
+                      "tertiary-fixed-dim": "#7cd0ff",
+                      "on-tertiary-container": "#fcfcff",
+                      "secondary-fixed": "#ffdcc2",
+                      "surface-bright": "#f9f9ff",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#8e1300",
+                      "on-tertiary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "40px",
+                      "column-gap": "24px",
+                      "container-max": "1200px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "mono-timer": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "body-base": [
+                              "Inter"
+                      ],
+                      "headline-md-mobile": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "question-text": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "mono-timer": [
+                              "20px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-base": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "question-text": [
+                              "22px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .bg-gradient-brand {
+            background: linear-gradient(135deg, #b51c00 0%, #dc3214 100%);
+        }
+      </style>
+</head>
+<body class="bg-background min-h-screen relative overflow-hidden font-body-base text-on-background">
+<!-- Dimmed Dashboard Background (Simulated) -->
+<div class="absolute inset-0 z-0 opacity-40 blur-sm flex flex-col pointer-events-none select-none backdrop-blur-sm">
+<!-- Simulated TopNav -->
+<header class="bg-primary flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 shadow-md">
+<div class="font-headline-md text-headline-md-mobile md:text-headline-md font-black text-on-primary">QuizPro</div>
+</header>
+<div class="flex flex-1">
+<!-- Simulated SideNav -->
+<aside class="bg-surface hidden md:flex flex-col gap-stack-md p-4 w-64 border-r border-outline-variant opacity-50">
+<div class="h-10 bg-surface-variant rounded-lg w-full mb-4"></div>
+<div class="h-10 bg-surface-variant rounded-lg w-full mb-4"></div>
+<div class="h-10 bg-surface-variant rounded-lg w-full mb-4"></div>
+</aside>
+<!-- Simulated Content Area -->
+<main class="flex-1 p-margin-desktop opacity-50">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-column-gap mb-stack-lg">
+<div class="h-32 bg-surface-container-lowest shadow-sm rounded-lg"></div>
+<div class="h-32 bg-surface-container-lowest shadow-sm rounded-lg"></div>
+<div class="h-32 bg-surface-container-lowest shadow-sm rounded-lg"></div>
+</div>
+<div class="h-64 bg-surface-container-lowest shadow-sm rounded-lg"></div>
+</main>
+</div>
+</div>
+<!-- Modal Overlay Background -->
+<div class="absolute inset-0 z-40 backdrop-blur-sm flex items-center justify-center p-margin-mobile md:p-margin-desktop bg-on-background/40">
+<!-- Modal Content Container -->
+<div class="glass-panel w-full max-w-2xl rounded-xl shadow-[0px_20px_40px_rgba(220,50,20,0.15)] overflow-hidden animate-[slideUp_0.3s_ease-out_forwards] bg-surface-bright">
+<!-- Header Section -->
+<div class="p-stack-lg border-b border-surface-variant relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-primary-container/10 rounded-full blur-2xl pointer-events-none"></div>
+<h1 class="font-headline-md text-headline-md-mobile md:text-headline-md text-on-surface mb-stack-sm relative z-10">Web Development Basics - Instructions</h1>
+<!-- Quick Stats Badge Area -->
+<div class="flex gap-4 mt-4 relative z-10">
+<div class="inline-flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">help</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">20 Questions</span>
+</div>
+<div class="inline-flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">15 Minutes</span>
+</div>
+</div>
+</div>
+<!-- Rules Checklist Area -->
+<div class="p-stack-lg bg-surface-container-lowest">
+<h2 class="font-headline-md text-headline-md-mobile md:text-question-text text-on-surface mb-stack-md flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">fact_check</span>
+                    Rules &amp; Guidelines
+                </h2>
+<ul class="space-y-stack-md">
+<li class="flex items-start gap-4 p-4 rounded-lg bg-surface-bright hover:bg-surface-container-low transition-colors duration-200 group border border-transparent hover:border-surface-variant">
+<div class="bg-primary-container/10 text-primary p-2 rounded-full group-hover:bg-primary group-hover:text-on-primary transition-colors flex-shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<div>
+<p class="font-body-base text-body-base text-on-surface">Read questions carefully.</p>
+<p class="text-sm text-on-surface-variant mt-1">Some questions may have tricky phrasing.</p>
+</div>
+</li>
+<li class="flex items-start gap-4 p-4 rounded-lg bg-surface-bright hover:bg-surface-container-low transition-colors duration-200 group border border-transparent hover:border-surface-variant">
+<div class="bg-primary-container/10 text-primary p-2 rounded-full group-hover:bg-primary group-hover:text-on-primary transition-colors flex-shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<p class="font-body-base text-body-base text-on-surface">Select only one answer per question.</p>
+<p class="text-sm text-on-surface-variant mt-1">Unless specifically marked as multiple-choice.</p>
+</div>
+</li>
+<li class="flex items-start gap-4 p-4 rounded-lg bg-surface-bright hover:bg-surface-container-low transition-colors duration-200 group border border-transparent hover:border-surface-variant">
+<div class="bg-primary-container/10 text-primary p-2 rounded-full group-hover:bg-primary group-hover:text-on-primary transition-colors flex-shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+</div>
+<div>
+<p class="font-body-base text-body-base text-on-surface">Use the navigator to jump between questions.</p>
+<p class="text-sm text-on-surface-variant mt-1">You can review and change answers before submitting.</p>
+</div>
+</li>
+<li class="flex items-start gap-4 p-4 rounded-lg bg-surface-bright hover:bg-surface-container-low transition-colors duration-200 group border border-transparent hover:border-surface-variant">
+<div class="bg-primary-container/10 text-primary p-2 rounded-full group-hover:bg-primary group-hover:text-on-primary transition-colors flex-shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">alarm_on</span>
+</div>
+<div>
+<p class="font-body-base text-body-base text-on-surface">Submit before the timer ends.</p>
+<p class="text-sm text-on-surface-variant mt-1">The quiz will auto-submit when time expires.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Action Area -->
+<div class="p-stack-lg bg-surface flex flex-col items-center justify-center border-t border-surface-variant">
+<button class="w-full md:w-auto min-w-[280px] bg-gradient-brand text-on-primary font-headline-md text-question-text py-4 px-8 rounded-lg shadow-[0px_8px_20px_rgba(220,50,20,0.3)] hover:shadow-[0px_12px_24px_rgba(220,50,20,0.4)] active:scale-95 transition-all duration-200 flex items-center justify-center gap-3 mb-4 group">
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                    Start Quiz Now
+                </button>
+<a class="font-body-base text-body-base text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1" href="#">
+                    Exit to Dashboard
+                </a>
+</div>
+</div>
+</div>
+
+
+</body></html>
