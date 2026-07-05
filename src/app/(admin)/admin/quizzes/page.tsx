@@ -127,6 +127,13 @@ export default async function AdminQuizzesPage({ searchParams }: AdminQuizzesPag
                             <span className="material-symbols-outlined text-lg">visibility</span>
                           </Link>
                           <Link
+                            href={`/admin/quizzes/${quiz.id}/leaderboard`}
+                            className="p-2 text-on-surface-variant hover:text-secondary hover:bg-surface-container-high rounded-lg transition-colors cursor-pointer"
+                            title="View Leaderboard"
+                          >
+                            <span className="material-symbols-outlined text-lg">leaderboard</span>
+                          </Link>
+                          <Link
                             href={`/admin/quizzes/${quiz.id}/edit`}
                             className="p-2 text-on-surface-variant hover:text-tertiary hover:bg-surface-container-high rounded-lg transition-colors cursor-pointer"
                             title="Edit Quiz & Questions"

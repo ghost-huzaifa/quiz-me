@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
-import { cookies } from 'next-headers'; // Wait! In Next.js 15+, cookies are imported from 'next/headers'
+
 import { UserSession } from '@/types';
 
 // Let's import cookies from 'next/headers' correctly.
