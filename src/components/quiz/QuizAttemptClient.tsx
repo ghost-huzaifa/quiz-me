@@ -125,7 +125,7 @@ export default function QuizAttemptClient({ quiz, questions }: QuizAttemptClient
             className="font-sans text-label-caps text-on-surface-variant hover:text-error transition-colors flex items-center gap-1 font-bold cursor-pointer"
           >
             <span className="material-symbols-outlined text-sm">close</span>
-            EXIT QUIZ
+            <span className="hidden sm:inline">EXIT QUIZ</span>
           </button>
         </div>
       </header>

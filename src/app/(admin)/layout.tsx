@@ -3,6 +3,7 @@ import { logoutAction } from '@/actions/auth';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import AdminSidebarClient from '@/components/layout/AdminSidebarClient';
+import AdminHeader from '@/components/layout/AdminHeader';
 
 export default async function AdminLayout({
   children,
@@ -76,15 +77,7 @@ export default async function AdminLayout({
       {/* Main Content Area */}
       <div className="flex-1 md:ml-64 flex flex-col min-h-screen relative">
         {/* Header */}
-        <header className="bg-surface-container-lowest border-b border-outline-variant/30 py-4 px-margin-desktop sticky top-0 z-20 shadow-level-1 flex items-center justify-between">
-          <h1 className="font-sans text-headline-md text-on-background font-bold">Admin Console</h1>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1 font-bold text-xs text-primary px-3 py-1.5 rounded-full bg-primary-container/10 border border-primary-container/20">
-              <span className="material-symbols-outlined text-xs">shield</span>
-              Secure Session
-            </div>
-          </div>
-        </header>
+        <AdminHeader initials={initials} userName={session.name} userRole={session.role} />
 
         {/* Main dynamic section */}
         <main className="flex-grow p-margin-mobile md:p-margin-desktop bg-pattern min-h-[calc(100vh-4rem)] flex flex-col">

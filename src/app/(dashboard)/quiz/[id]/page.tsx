@@ -61,7 +61,7 @@ export default async function QuizInstructionsPage({ params }: QuizInstructionsP
           </h1>
           
           {/* Quick Stats Badges */}
-          <div className="flex gap-4 mt-4 relative z-10">
+          <div className="flex flex-wrap gap-2 sm:gap-4 mt-4 relative z-10">
             <div className="inline-flex items-center gap-2 bg-surface-container-lowest px-4 py-2 rounded-full border border-surface-variant/40">
               <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
                 help
