@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useTransition, useActionState } from 'react';
+import { useState, useTransition, useActionState, useRef } from 'react';
 import { updateQuizAction } from '@/actions/quiz';
-import { addQuestionAction, updateQuestionAction, deleteQuestionAction } from '@/actions/question';
+import { addQuestionAction, updateQuestionAction, deleteQuestionAction, deleteQuestionImageAction } from '@/actions/question';
 import Link from 'next/link';
+import ImageZoom from '@/components/ui/ImageZoom';
 
 interface Question {
   id: string;
@@ -14,6 +15,11 @@ interface Question {
   optionD: string;
   correctAnswer: string;
   order: number;
+  imageUrl: string | null;
+  optionAImageUrl: string | null;
+  optionBImageUrl: string | null;
+  optionCImageUrl: string | null;
+  optionDImageUrl: string | null;
 }
 
 interface EditQuizFormProps {
@@ -27,6 +33,113 @@ interface EditQuizFormProps {
     randomize: boolean;
     questions: Question[];
   };
+}
+
+// Small reusable image upload widget
+function ImageUploadWidget({
+  imageUrl,
+  questionId,
+  field,
+  onUploaded,
+  onRemoved,
+  label,
+}: {
+  imageUrl: string | null;
+  questionId: string;
+  field: string;
+  onUploaded: (url: string) => void;
+  onRemoved: () => void;
+  label: string;
+}) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isRemoving, setIsRemoving] = useState(false);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('questionId', questionId);
+      formData.append('field', field);
+
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (data.success && data.url) {
+        // Bust cache by appending timestamp
+        onUploaded(data.url + '&t=' + Date.now());
+      } else {
+        alert(data.message || 'Upload failed.');
+      }
+    } catch {
+      alert('Upload failed.');
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleRemove = async () => {
+    if (!confirm('Remove this image?')) return;
+    setIsRemoving(true);
+    try {
+      const res = await deleteQuestionImageAction(questionId, field);
+      if (res.success) {
+        onRemoved();
+      } else {
+        alert(res.message || 'Failed to remove image.');
+      }
+    } catch {
+      alert('Failed to remove image.');
+    } finally {
+      setIsRemoving(false);
+    }
+  };
+
+  return (
+    <div className="mt-1">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        className="hidden"
+        id={`file-${questionId}-${field}`}
+      />
+      {imageUrl ? (
+        <div className="flex items-center gap-2 mt-1">
+          <ImageZoom
+            src={imageUrl}
+            alt={label}
+            className="w-16 h-16 object-cover rounded-lg border border-outline-variant/40 shadow-sm"
+          />
+          <button
+            type="button"
+            onClick={handleRemove}
+            disabled={isRemoving}
+            className="p-1 text-error hover:bg-error-container rounded text-xs font-bold flex items-center gap-0.5 cursor-pointer disabled:opacity-50"
+          >
+            <span className="material-symbols-outlined text-xs">close</span>
+            {isRemoving ? '...' : 'Remove'}
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={isUploading}
+          className="text-xs text-primary hover:text-primary-dark font-bold flex items-center gap-1 cursor-pointer disabled:opacity-50 mt-0.5"
+        >
+          <span className="material-symbols-outlined text-xs">add_photo_alternate</span>
+          {isUploading ? 'Uploading...' : `Add ${label}`}
+        </button>
+      )}
+    </div>
+  );
 }
 
 export default function EditQuizForm({ quiz }: EditQuizFormProps) {
@@ -89,6 +202,11 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
         optionD: newOptD,
         correctAnswer: newCorrect,
         order: nextOrder,
+        imageUrl: null,
+        optionAImageUrl: null,
+        optionBImageUrl: null,
+        optionCImageUrl: null,
+        optionDImageUrl: null,
       };
       setQuestions((prev) => [...prev, newQuestion].sort((a, b) => a.order - b.order));
       // Reset form
@@ -213,6 +331,25 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
         }),
       ]);
     });
+  };
+
+  // Helper to update a question's image URL in state
+  const updateQuestionImage = (questionId: string, field: string, url: string | null) => {
+    setQuestions((prev) =>
+      prev.map((q) => {
+        if (q.id !== questionId) return q;
+        const fieldMap: Record<string, keyof Question> = {
+          image: 'imageUrl',
+          optionAImage: 'optionAImageUrl',
+          optionBImage: 'optionBImageUrl',
+          optionCImage: 'optionCImageUrl',
+          optionDImage: 'optionDImageUrl',
+        };
+        const key = fieldMap[field];
+        if (!key) return q;
+        return { ...q, [key]: url };
+      })
+    );
   };
 
   return (
@@ -425,6 +562,7 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
                 <div className="space-y-4">
                   {questions.map((q, idx) => {
                     const isEditing = editingQuestionId === q.id;
+                    const hasAnyImage = q.imageUrl || q.optionAImageUrl || q.optionBImageUrl || q.optionCImageUrl || q.optionDImageUrl;
                     return (
                       <div 
                         key={q.id}
@@ -458,12 +596,34 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
                           <p className="font-sans text-sm font-bold text-on-surface leading-tight">
                             {q.text}
                           </p>
+                          {/* Question image thumbnail */}
+                          {q.imageUrl && (
+                            <ImageZoom src={q.imageUrl} alt="Question" className="mt-2 w-20 h-14 object-cover rounded-lg border border-outline-variant/40" />
+                          )}
                           <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 text-xs text-on-surface-variant">
-                            <div>A: {q.optionA}</div>
-                            <div>B: {q.optionB}</div>
-                            <div>C: {q.optionC}</div>
-                            <div>D: {q.optionD}</div>
+                            <div className="flex items-center gap-1">
+                              A: {q.optionA}
+                              {q.optionAImageUrl && <span className="material-symbols-outlined text-xs text-primary">image</span>}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              B: {q.optionB}
+                              {q.optionBImageUrl && <span className="material-symbols-outlined text-xs text-primary">image</span>}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              C: {q.optionC}
+                              {q.optionCImageUrl && <span className="material-symbols-outlined text-xs text-primary">image</span>}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              D: {q.optionD}
+                              {q.optionDImageUrl && <span className="material-symbols-outlined text-xs text-primary">image</span>}
+                            </div>
                           </div>
+                          {hasAnyImage && (
+                            <div className="flex items-center gap-1 mt-1.5 text-xs text-primary font-bold">
+                              <span className="material-symbols-outlined text-xs">photo_library</span>
+                              Has images
+                            </div>
+                          )}
                           <p className="text-xs font-bold text-tertiary mt-2">
                             Correct Answer: Option {q.correctAnswer}
                           </p>
@@ -496,7 +656,7 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
             </div>
 
             {/* Right Box: Question Creator Form */}
-            <div className="w-full lg:w-96 bg-surface-container-lowest p-6 rounded-xl border border-surface-container-high shadow-sm shrink-0">
+            <div className="w-full lg:w-[420px] bg-surface-container-lowest p-6 rounded-xl border border-surface-container-high shadow-sm shrink-0">
               <h3 className="font-sans text-body-base font-bold mb-6 text-on-surface flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary">
                   {editingQuestionId ? 'edit_square' : 'add_box'}
@@ -517,6 +677,17 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
                     rows={2}
                     className="w-full p-3 rounded-lg bg-surface border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none font-sans text-sm text-on-surface"
                   />
+                  {/* Question image upload — only available after question is saved */}
+                  {editingQuestionId && (
+                    <ImageUploadWidget
+                      imageUrl={questions.find((q) => q.id === editingQuestionId)?.imageUrl || null}
+                      questionId={editingQuestionId}
+                      field="image"
+                      onUploaded={(url) => updateQuestionImage(editingQuestionId, 'image', url)}
+                      onRemoved={() => updateQuestionImage(editingQuestionId, 'image', null)}
+                      label="Image"
+                    />
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -524,24 +695,46 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
                     Options &amp; Distractors
                   </label>
                   {[
-                    { key: 'A', value: editingQuestionId ? editOptA : newOptA, setter: editingQuestionId ? setEditOptA : setNewOptA },
-                    { key: 'B', value: editingQuestionId ? editOptB : newOptB, setter: editingQuestionId ? setEditOptB : setNewOptB },
-                    { key: 'C', value: editingQuestionId ? editOptC : newOptC, setter: editingQuestionId ? setEditOptC : setNewOptC },
-                    { key: 'D', value: editingQuestionId ? editOptD : newOptD, setter: editingQuestionId ? setEditOptD : setNewOptD },
-                  ].map(({ key, value, setter }) => (
-                    <div key={key} className="flex items-center gap-2">
-                      <span className="font-bold text-xs text-on-surface-variant w-4">{key}:</span>
-                      <input
-                        type="text"
-                        value={value}
-                        onChange={(e) => setter(e.target.value)}
-                        required
-                        placeholder={`Option ${key}`}
-                        className="flex-1 p-2 rounded-lg bg-surface border border-outline-variant focus:border-primary focus:outline-none font-sans text-xs text-on-surface"
-                      />
+                    { key: 'A', value: editingQuestionId ? editOptA : newOptA, setter: editingQuestionId ? setEditOptA : setNewOptA, field: 'optionAImage', urlKey: 'optionAImageUrl' as const },
+                    { key: 'B', value: editingQuestionId ? editOptB : newOptB, setter: editingQuestionId ? setEditOptB : setNewOptB, field: 'optionBImage', urlKey: 'optionBImageUrl' as const },
+                    { key: 'C', value: editingQuestionId ? editOptC : newOptC, setter: editingQuestionId ? setEditOptC : setNewOptC, field: 'optionCImage', urlKey: 'optionCImageUrl' as const },
+                    { key: 'D', value: editingQuestionId ? editOptD : newOptD, setter: editingQuestionId ? setEditOptD : setNewOptD, field: 'optionDImage', urlKey: 'optionDImageUrl' as const },
+                  ].map(({ key, value, setter, field, urlKey }) => (
+                    <div key={key}>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-xs text-on-surface-variant w-4">{key}:</span>
+                        <input
+                          type="text"
+                          value={value}
+                          onChange={(e) => setter(e.target.value)}
+                          required
+                          placeholder={`Option ${key}`}
+                          className="flex-1 p-2 rounded-lg bg-surface border border-outline-variant focus:border-primary focus:outline-none font-sans text-xs text-on-surface"
+                        />
+                      </div>
+                      {/* Option image upload — only available after question is saved */}
+                      {editingQuestionId && (
+                        <div className="ml-6">
+                          <ImageUploadWidget
+                            imageUrl={questions.find((q) => q.id === editingQuestionId)?.[urlKey] || null}
+                            questionId={editingQuestionId}
+                            field={field}
+                            onUploaded={(url) => updateQuestionImage(editingQuestionId, field, url)}
+                            onRemoved={() => updateQuestionImage(editingQuestionId, field, null)}
+                            label={`Option ${key} Image`}
+                          />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
+
+                {!editingQuestionId && (
+                  <div className="bg-surface-container/50 rounded-lg p-3 text-xs text-on-surface-variant flex items-start gap-2">
+                    <span className="material-symbols-outlined text-sm mt-0.5">info</span>
+                    <span>Images can be added after saving the question. Create the question first, then click Edit to attach images.</span>
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-label-caps text-on-surface-variant mb-1 font-bold">

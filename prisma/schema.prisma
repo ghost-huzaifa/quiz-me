@@ -40,16 +40,26 @@ model Quiz {
 }
 
 model Question {
-  id            String @id @default(cuid())
-  text          String
-  optionA       String
-  optionB       String
-  optionC       String
-  optionD       String
-  correctAnswer String // "A", "B", "C", or "D"
-  order         Int
-  quizId        String
-  quiz          Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  id               String  @id @default(cuid())
+  text             String
+  imageData        Bytes?
+  imageMime        String?
+  optionA          String
+  optionAImageData Bytes?
+  optionAImageMime String?
+  optionB          String
+  optionBImageData Bytes?
+  optionBImageMime String?
+  optionC          String
+  optionCImageData Bytes?
+  optionCImageMime String?
+  optionD          String
+  optionDImageData Bytes?
+  optionDImageMime String?
+  correctAnswer    String // "A", "B", "C", or "D"
+  order            Int
+  quizId           String
+  quiz             Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
 }
 
 model QuizAttempt {

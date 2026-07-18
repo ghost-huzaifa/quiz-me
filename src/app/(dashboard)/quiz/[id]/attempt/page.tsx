@@ -72,6 +72,11 @@ export default async function QuizAttemptPage({ params }: QuizAttemptPageProps) 
     optionC: q.optionC,
     optionD: q.optionD,
     order: q.order,
+    imageUrl: q.imageData ? `/api/upload/${q.id}?field=image` : null,
+    optionAImageUrl: q.optionAImageData ? `/api/upload/${q.id}?field=optionAImage` : null,
+    optionBImageUrl: q.optionBImageData ? `/api/upload/${q.id}?field=optionBImage` : null,
+    optionCImageUrl: q.optionCImageData ? `/api/upload/${q.id}?field=optionCImage` : null,
+    optionDImageUrl: q.optionDImageData ? `/api/upload/${q.id}?field=optionDImage` : null,
   }));
 
   return (

@@ -5,6 +5,8 @@ import { useCountdown } from '@/hooks/useCountdown';
 import { submitAttemptAction } from '@/actions/attempt';
 import { useRouter } from 'next/navigation';
 
+import ImageZoom from '@/components/ui/ImageZoom';
+
 interface ClientQuestion {
   id: string;
   text: string;
@@ -13,6 +15,11 @@ interface ClientQuestion {
   optionC: string;
   optionD: string;
   order: number;
+  imageUrl: string | null;
+  optionAImageUrl: string | null;
+  optionBImageUrl: string | null;
+  optionCImageUrl: string | null;
+  optionDImageUrl: string | null;
 }
 
 interface QuizAttemptClientProps {
@@ -156,16 +163,26 @@ export default function QuizAttemptClient({ quiz, questions }: QuizAttemptClient
                   <h1 className="font-sans text-question-text text-on-surface mt-4 font-bold leading-snug">
                     {currentQuestion.text}
                   </h1>
+                  {/* Question image */}
+                  {currentQuestion.imageUrl && (
+                    <div className="mt-4">
+                      <ImageZoom
+                        src={currentQuestion.imageUrl}
+                        alt="Question illustration"
+                        className="max-w-full max-h-72 rounded-xl border border-outline-variant/30 shadow-level-1 object-contain"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Options list */}
                 <div className="flex flex-col gap-stack-md">
                   {[
-                    { key: 'A', text: currentQuestion.optionA },
-                    { key: 'B', text: currentQuestion.optionB },
-                    { key: 'C', text: currentQuestion.optionC },
-                    { key: 'D', text: currentQuestion.optionD },
-                  ].map(({ key, text }) => {
+                    { key: 'A', text: currentQuestion.optionA, imageUrl: currentQuestion.optionAImageUrl },
+                    { key: 'B', text: currentQuestion.optionB, imageUrl: currentQuestion.optionBImageUrl },
+                    { key: 'C', text: currentQuestion.optionC, imageUrl: currentQuestion.optionCImageUrl },
+                    { key: 'D', text: currentQuestion.optionD, imageUrl: currentQuestion.optionDImageUrl },
+                  ].map(({ key, text, imageUrl }) => {
                     const isSelected = answers[currentQuestion.id] === key;
                     return (
                       <label 
@@ -176,14 +193,23 @@ export default function QuizAttemptClient({ quiz, questions }: QuizAttemptClient
                         <div className={`bg-surface-container-lowest border-2 rounded-xl p-6 transition-all duration-200 shadow-level-1 hover:shadow-level-2 flex items-center gap-4 ${
                           isSelected ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-surface-variant hover:border-primary'
                         }`}>
-                          <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold text-sm transition-colors ${
+                          <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold text-sm transition-colors shrink-0 ${
                             isSelected ? 'border-primary bg-primary text-on-primary' : 'border-surface-variant text-on-surface-variant'
                           }`}>
                             {key}
                           </div>
-                          <span className="font-sans text-body-base text-on-surface flex-grow font-medium">
-                            {text}
-                          </span>
+                          <div className="flex-grow">
+                            <span className="font-sans text-body-base text-on-surface font-medium">
+                              {text}
+                            </span>
+                            {imageUrl && (
+                              <ImageZoom
+                                src={imageUrl}
+                                alt={`Option ${key}`}
+                                className="mt-2 max-w-full max-h-40 rounded-lg border border-outline-variant/30 object-contain"
+                              />
+                            )}
+                          </div>
                         </div>
                       </label>
                     );

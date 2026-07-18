@@ -8,6 +8,8 @@ interface QuizReviewPageProps {
   searchParams: Promise<{ attemptId?: string }>;
 }
 
+import ImageZoom from '@/components/ui/ImageZoom';
+
 export default async function QuizReviewPage({ params, searchParams }: QuizReviewPageProps) {
   const { id: quizId } = await params;
   const { attemptId } = await searchParams;
@@ -77,6 +79,15 @@ export default async function QuizReviewPage({ params, searchParams }: QuizRevie
           const isCorrect = userAnswer === correctAnswer;
           const isSkipped = !userAnswer;
 
+          // Build image URLs
+          const questionImageUrl = q.imageData ? `/api/upload/${q.id}?field=image` : null;
+          const optionImages: Record<string, string | null> = {
+            A: q.optionAImageData ? `/api/upload/${q.id}?field=optionAImage` : null,
+            B: q.optionBImageData ? `/api/upload/${q.id}?field=optionBImage` : null,
+            C: q.optionCImageData ? `/api/upload/${q.id}?field=optionCImage` : null,
+            D: q.optionDImageData ? `/api/upload/${q.id}?field=optionDImage` : null,
+          };
+
           return (
             <div 
               key={q.id}
@@ -117,6 +128,17 @@ export default async function QuizReviewPage({ params, searchParams }: QuizRevie
                 {q.text}
               </h3>
 
+              {/* Question Image */}
+              {questionImageUrl && (
+                <div className="mb-4">
+                  <ImageZoom
+                    src={questionImageUrl}
+                    alt="Question illustration"
+                    className="max-w-full max-h-56 rounded-xl border border-outline-variant/30 shadow-sm object-contain"
+                  />
+                </div>
+              )}
+
               {/* Options list */}
               <div className="grid grid-cols-1 gap-2">
                 {[
@@ -127,6 +149,7 @@ export default async function QuizReviewPage({ params, searchParams }: QuizRevie
                 ].map(({ key, text }) => {
                   const wasSelected = userAnswer === key;
                   const isCorrectOption = correctAnswer === key;
+                  const optionImageUrl = optionImages[key];
 
                   let cardClass = 'border-surface-variant bg-surface-container-lowest';
                   let badgeClass = 'border-surface-variant text-on-surface-variant';
@@ -142,12 +165,21 @@ export default async function QuizReviewPage({ params, searchParams }: QuizRevie
                   return (
                     <div 
                       key={key}
-                      className={`border-2 rounded-lg p-4 flex items-center gap-4 transition-all duration-200 ${cardClass}`}
+                      className={`border-2 rounded-lg p-4 flex items-start gap-4 transition-all duration-200 ${cardClass}`}
                     >
-                      <div className={`w-7 h-7 rounded-full border-2 flex items-center justify-center font-bold text-xs ${badgeClass}`}>
+                      <div className={`w-7 h-7 rounded-full border-2 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 ${badgeClass}`}>
                         {key}
                       </div>
-                      <span className="font-sans text-sm font-medium">{text}</span>
+                      <div className="flex-grow">
+                        <span className="font-sans text-sm font-medium">{text}</span>
+                        {optionImageUrl && (
+                          <ImageZoom
+                            src={optionImageUrl}
+                            alt={`Option ${key}`}
+                            className="mt-2 max-w-full max-h-36 rounded-lg border border-outline-variant/30 object-contain"
+                          />
+                        )}
+                      </div>
                     </div>
                   );
                 })}

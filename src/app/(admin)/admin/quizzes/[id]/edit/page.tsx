@@ -28,5 +28,26 @@ export default async function AdminEditQuizPage({ params }: AdminEditQuizPagePro
     redirect('/admin/quizzes');
   }
 
-  return <EditQuizForm quiz={quiz} />;
+  // Transform questions to include image URLs where images exist
+  const quizWithImageUrls = {
+    ...quiz,
+    questions: quiz.questions.map((q) => ({
+      id: q.id,
+      text: q.text,
+      optionA: q.optionA,
+      optionB: q.optionB,
+      optionC: q.optionC,
+      optionD: q.optionD,
+      correctAnswer: q.correctAnswer,
+      order: q.order,
+      quizId: q.quizId,
+      imageUrl: q.imageData ? `/api/upload/${q.id}?field=image` : null,
+      optionAImageUrl: q.optionAImageData ? `/api/upload/${q.id}?field=optionAImage` : null,
+      optionBImageUrl: q.optionBImageData ? `/api/upload/${q.id}?field=optionBImage` : null,
+      optionCImageUrl: q.optionCImageData ? `/api/upload/${q.id}?field=optionCImage` : null,
+      optionDImageUrl: q.optionDImageData ? `/api/upload/${q.id}?field=optionDImage` : null,
+    })),
+  };
+
+  return <EditQuizForm quiz={quizWithImageUrls} />;
 }

@@ -107,3 +107,50 @@ export async function deleteQuestionAction(questionId: string) {
     return { success: false, message: 'Failed to delete question.' };
   }
 }
+
+const VALID_IMAGE_FIELDS = [
+  'image',
+  'optionAImage',
+  'optionBImage',
+  'optionCImage',
+  'optionDImage',
+] as const;
+
+type ImageField = (typeof VALID_IMAGE_FIELDS)[number];
+
+const IMAGE_FIELD_MAP: Record<ImageField, { data: string; mime: string }> = {
+  image: { data: 'imageData', mime: 'imageMime' },
+  optionAImage: { data: 'optionAImageData', mime: 'optionAImageMime' },
+  optionBImage: { data: 'optionBImageData', mime: 'optionBImageMime' },
+  optionCImage: { data: 'optionCImageData', mime: 'optionCImageMime' },
+  optionDImage: { data: 'optionDImageData', mime: 'optionDImageMime' },
+};
+
+export async function deleteQuestionImageAction(questionId: string, field: string) {
+  try {
+    const session = await getSession();
+    if (!session || session.role !== 'ADMIN') {
+      return { success: false, message: 'Unauthorized' };
+    }
+
+    if (!VALID_IMAGE_FIELDS.includes(field as ImageField)) {
+      return { success: false, message: 'Invalid field.' };
+    }
+
+    const columns = IMAGE_FIELD_MAP[field as ImageField];
+
+    const question = await prisma.question.update({
+      where: { id: questionId },
+      data: {
+        [columns.data]: null,
+        [columns.mime]: null,
+      },
+    });
+
+    revalidatePath(`/admin/quizzes/${question.quizId}/edit`);
+    return { success: true };
+  } catch (error) {
+    console.error('Delete question image error:', error);
+    return { success: false, message: 'Failed to delete image.' };
+  }
+}
